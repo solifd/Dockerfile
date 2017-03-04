@@ -12,7 +12,7 @@ RUN yum makecache fast && yum -y update glibc
 
 # 安装常用软件
 
-RUN yum install -y openssh-server vim tar wget curl rsync bzip2 iptables tcpdump less telnet net-tools lsof
+RUN yum install -y openssh-server 
 
 # 初始化ssh登陆
 
