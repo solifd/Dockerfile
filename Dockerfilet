@@ -31,7 +31,6 @@ RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
-RUN  chkconfig  shadowsocksR on
 
 RUN yum clean all
 
