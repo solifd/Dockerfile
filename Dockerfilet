@@ -36,6 +36,7 @@ ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
 ADD  supervisord.conf /etc/
 ADD supervisord /etc/
+RUN  chmod +x /etc/supervisord
 ADD run.sh /usr/local/sbin/run.sh
 RUN yum clean all
 
