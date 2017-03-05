@@ -34,9 +34,9 @@ RUN echo 'passw0rd' | passwd root --stdin
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
-ADD  supervisord.conf /etc/
-ADD supervisord /etc/
-RUN  chmod +x /etc/supervisord
+COPY  supervisord.conf /etc/supervisord.conf
+#ADD supervisord /etc/
+#RUN  chmod +x /etc/supervisord
 ADD run.sh /usr/local/sbin/run.sh
 RUN yum clean all
 
@@ -46,10 +46,10 @@ RUN yum clean all
 
 RUN mkdir /var/run/sshd    
 
-
+RUN mkdir /var/log/supervisor
 
 EXPOSE 22    
 EXPOSE 8080
 
 #CMD ["/usr/local/sbin/run.sh" ]
-CMD ["/etc/supervisord"]
+CMD ["/usr/bin/supervisord"]
