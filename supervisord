@@ -2,3 +2,16 @@ yum install python-setuptools -y&& easy_install pip
 pip install supervisor
 echo_supervisord_conf > /etc/supervisord.conf
 yum clean all
+echo_supervisord_conf > /etc/supervisord.conf
+ echo "[program:shadowsocks]" >> /etc/supervisord.conf
+ echo "command = /etc/init.d/shadowsocksR1      start" >>/etc/supervisord.conf 
+ echo "user = root" >> /etc/supervisord.conf
+ echo "autostart = true" >> /etc/supervisord.conf
+ echo "autoresart = true" >> /etc/supervisord.conf
+ echo "[program:sshd]" >> /etc/supervisord.conf
+ echo "command = /usr/sbin/sshd -D" >>/etc/supervisord.conf 
+ echo "user = root" >> /etc/supervisord.conf
+ echo "autostart = true" >> /etc/supervisord.conf
+ echo "autoresart = true" >> /etc/supervisord.conf
+ 
+ supervisorctl reload
