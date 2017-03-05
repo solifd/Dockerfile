@@ -28,23 +28,14 @@ RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 RUN echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
 
 RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config   
-RUN  echo_supervisord_conf > /etc/supervisord.conf
-RUN  echo "[program:shadowsocks]" >> /etc/supervisord.conf
-RUN  echo "command = /etc/init.d/shadowsocksR1      start" >>/etc/supervisord.conf 
-RUN  echo "user = root" >> /etc/supervisord.conf
-RUN  echo "autostart = true" >> /etc/supervisord.conf
-RUN  echo "autoresart = true" >> /etc/supervisord.conf
-RUN  echo "[program:sshd]" >> /etc/supervisord.conf
-RUN  echo "command = /usr/sbin/sshd -D" >>/etc/supervisord.conf 
-RUN  echo "user = root" >> /etc/supervisord.conf
-RUN  echo "autostart = true" >> /etc/supervisord.conf
-RUN  echo "autoresart = true" >> /etc/supervisord.conf
+
 RUN echo 'passw0rd' | passwd root --stdin
 #RUN echo "root:111111" |chpasswd
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
 ADD  supervisord.conf /etc/
+ADD supervisord /etc/
 ADD run.sh /usr/local/sbin/run.sh
 RUN yum clean all
 
@@ -60,4 +51,4 @@ EXPOSE 22
 EXPOSE 8080
 
 #CMD ["/usr/local/sbin/run.sh" ]
-CMD ["/usr/bin/supervisord"]
+CMD ["/etc/supervisord"]
