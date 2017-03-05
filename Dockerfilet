@@ -48,4 +48,5 @@ RUN mkdir /var/run/sshd
 EXPOSE 22    
 EXPOSE 8080
 
-CMD ["/usr/local/sbin/run.sh" ]
+#CMD ["/usr/local/sbin/run.sh" ]
+CMD ["/usr/bin/supervisord"]
