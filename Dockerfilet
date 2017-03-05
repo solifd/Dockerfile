@@ -27,7 +27,8 @@ RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 RUN echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
 
 RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config    
-RUN echo "root:111111" |chpasswd
+RUN echo 'passw0rd' | passwd root --stdin
+#RUN echo "root:111111" |chpasswd
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
