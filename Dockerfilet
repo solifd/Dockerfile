@@ -31,7 +31,7 @@ RUN echo "root:111111" |chpasswd
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
-
+ADD run.sh /usr/local/sbin/run.sh
 RUN yum clean all
 
 
