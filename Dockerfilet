@@ -12,8 +12,9 @@ RUN yum makecache fast && yum -y update glibc
 
 # 安装常用软件
 
-RUN yum install -y openssh-server 
-
+RUN yum install -y openssh-server python-setuptools
+RUN easy_install pip
+RUN  pip install supervisor
 # 初始化ssh登陆
 
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
@@ -32,6 +33,7 @@ RUN echo 'passw0rd' | passwd root --stdin
 ADD  shadowsocksR   /usr/local/
 ADD  shadowsocksR1  /etc/init.d/
 ADD  shadowsocks.json /etc/
+ADD  supervisord.conf /etc/
 ADD run.sh /usr/local/sbin/run.sh
 RUN yum clean all
 
