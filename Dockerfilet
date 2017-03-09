@@ -52,5 +52,6 @@ RUN mkdir /var/log/supervisor
 EXPOSE 22    
 EXPOSE 8080
 
+EXPOSE 137
 #CMD ["/usr/local/sbin/run.sh" ]
 CMD ["/usr/bin/supervisord"]
