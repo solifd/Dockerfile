@@ -4,6 +4,7 @@
  "local_address": "127.0.0.1",
  "local_port":1080,
  "port_password":{
+   "80": "yO6AEnfZ",
     "137": "yO6AEnfZ",
      "138": "yO6AEnfZ",
      "139": "yO6AEnfZ",
