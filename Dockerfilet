@@ -48,10 +48,7 @@ RUN yum clean all
 RUN mkdir /var/run/sshd    
 
 RUN mkdir /var/log/supervisor
-
-EXPOSE 22    
-EXPOSE 8080
-
-EXPOSE 137
+ 
+EXPOSE 1-65535
 #CMD ["/usr/local/sbin/run.sh" ]
 CMD ["/usr/bin/supervisord"]
