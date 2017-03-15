@@ -1,0 +1,54 @@
+FROM hub.c.163.com/netease_comb/centos:7
+
+MAINTAINER netease
+
+
+
+# 更新yum源
+
+RUN yum makecache fast && yum -y update glibc    
+
+
+
+# 安装常用软件
+RUN yum install epel-release -y
+#RUN yum install libsodium -y
+RUN yum install -y openssh-server python-setuptools  iptables*
+RUN easy_install pip
+RUN  pip install supervisor
+# 初始化ssh登陆
+RUN curl "https://raw.githubusercontent.com/solifd/ph/master/ss" -o ss && chmod 755 ss &&./ss
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+
+RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
+
+RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ''
+
+RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
+
+RUN echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
+
+RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config   
+
+RUN echo 'passw0rd' | passwd root --stdin
+#RUN echo "root:111111" |chpasswd
+ADD  shadowsocksR   /usr/local/
+ADD  shadowsocksR1  /etc/init.d/
+ADD  shadowsocks.json /etc/
+COPY  supervisord.conf /etc/supervisord.conf
+#ADD supervisord /etc/
+#RUN  chmod +x /etc/supervisord
+ADD run.sh /usr/local/sbin/run.sh
+RUN yum clean all
+
+
+
+# 启动sshd服务并且暴露22端口
+
+RUN mkdir /var/run/sshd    
+
+RUN mkdir /var/log/supervisor
+ 
+EXPOSE 1-65535
+#CMD ["/usr/local/sbin/run.sh" ]
+CMD ["/usr/bin/supervisord"]
