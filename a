@@ -6,3 +6,5 @@ RUN apk --update add openssh \
   && echo "root:root" | chpasswd \
   && rm -rf /var/cache/apk/*
 EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
