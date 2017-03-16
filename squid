@@ -1,4 +1,4 @@
-FROM centos:6.7-base
+FROM centos:centos6.8
 MAINTAINER netease
 
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
