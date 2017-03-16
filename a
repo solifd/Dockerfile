@@ -1,2 +1,8 @@
-FROM scratch
-ADD rootfs.tar.gz /
+FROM alpine:3.5
+
+
+RUN apk --update add openssh \
+  && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
+  && echo "root:root" | chpasswd \
+  && rm -rf /var/cache/apk/*
+EXPOSE 22
