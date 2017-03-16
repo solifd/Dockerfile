@@ -1,3 +1,7 @@
+FROM alpine:3.4
+
+MAINTAINER Adrian B. Danieli "https://github.com/sickp"
+
 RUN apk --update add openssh 
 RUN apk --update --no-cache add python git iproute2 build-base tar curl
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
@@ -7,9 +11,17 @@ RUN apk --update --no-cache add  python-setuptools -y&& easy_install pip
 RUN pip install supervisor
 RUN   mkdir /tmp/libsodium
 RUN   curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.10/libsodium-1.0.10.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 
+RUN  cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo)  &&  && make install &&  ldconfig
+RUN   curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && pip install cymysql 
+RUN   mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
+RUN   apk --no-cache del build-base 
+RUN   rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
+RUN   echo_supervisord_conf > /etc/supervisord.conf \
+     
 
+EXPOSE 22
 
-
+ENTRYPOINT ["/entrypoint.sh"]
 
 echo "[program:shadowsocks]
 command =python /root/shadowsocks/shadowsocks/server.py -c /etc/shadowsocks.json
@@ -19,37 +31,3 @@ autoresart = true
 #stderr_logfile = /var/log/supervisor/ss.stderr.log
 #stdout_logfile = /var/log/supervisor/ss.stdout.log
 ">> /etc/supervisord.conf
-
-
- cd /tmp/libsodium &&  ./configure &&  make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo)  &&  && make install &&  ldconfig
- curl -Lk https://bootstrap.pypa.io/get-pip.py | python  && pip install cymysql 
- mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b manyuser https://github.com/breakwa11/shadowsocks.git
- apk --no-cache del build-base 
- rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
-
-
-
-
-FROM alpine:3.4
-
-MAINTAINER Adrian B. Danieli "https://github.com/sickp"
-
-
-
-EXPOSE 22
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-
-
-RUN apk --update add openssh \
-
-  && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
-
-  && echo "root:root" | chpasswd \
-
-  && rm -rf /var/cache/apk/*
-
-
-
-COPY rootfs /
