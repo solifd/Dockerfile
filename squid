@@ -1,0 +1,13 @@
+FROM centos:6.7-base
+MAINTAINER netease
+
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN yum install -y openssh-server && yum clean all
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
+RUN echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config    
+RUN  wget --no-check-certificate https://raw.githubusercontent.com/solifd/squidproxy/master/squid_centos_debian.sh -O squid.sh && bash squid.sh
+EXPOSE 22    
+EXPOSE 25
+CMD ["/usr/sbin/sshd", "-D"]
