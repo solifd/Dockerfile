@@ -2,7 +2,7 @@ FROM centos:centos6.8
 MAINTAINER netease
 
 RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN yum install -y openssh-server && yum clean all
+RUN yum install -y openssh-server wget && yum clean all
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key
 RUN echo "RSAAuthentication yes" >> /etc/ssh/sshd_config
