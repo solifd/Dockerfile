@@ -17,17 +17,8 @@ RUN   mkdir -p  /data/shadowsocks  && cd /data/shadowsocks  && git clone -b many
 RUN   apk --no-cache del build-base 
 RUN   rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
 RUN   echo_supervisord_conf > /etc/supervisord.conf \
-     
+ADD   su /root/    &&   sh /root/su
+ADD  shadowsocks.json  /etc/
 
 EXPOSE 22
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-echo "[program:shadowsocks]
-command =python /root/shadowsocks/shadowsocks/server.py -c /etc/shadowsocks.json
-user = root
-autostart = true
-autoresart = true
-#stderr_logfile = /var/log/supervisor/ss.stderr.log
-#stdout_logfile = /var/log/supervisor/ss.stdout.log
-">> /etc/supervisord.conf
+CMD ["/usr/bin/supervisord"]
