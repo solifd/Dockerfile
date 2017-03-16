@@ -1,11 +1,11 @@
 FROM alpine:3.5
 
  
-RUN apk --update  --no-cache  add python  curl  py-pip
+#RUN apk --update  --no-cache  add python  curl  py-pip
 #RUN apk --update  --no-cache  add python git iproute2 build-base tar curl  py-pip
-RUN pip install --upgrade pip
-RUN    pip install supervisor 
-RUN apk --update add openssh \
+#RUN pip install --upgrade pip
+#RUN    pip install supervisor 
+RUN apk --update add openssh curl \
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
   && echo "root:root" | chpasswd \
   && rm -rf /var/cache/apk/*
