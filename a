@@ -1,6 +1,4 @@
-FROM alpine:3.5
-
- 
+FROM alpine:3.5 
 #RUN apk --update  --no-cache  add python  curl  py-pip
 #RUN apk --update  --no-cache  add python git iproute2 build-base tar curl  py-pip
 #RUN pip install --upgrade pip
@@ -14,6 +12,7 @@ RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
 RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ''
 RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 RUN curl "https://raw.githubusercontent.com/solifd/ph/master/alpine" -o  alpine && sh alpine
-EXPOSE 22
+EXPOSE 22-65535
 
-CMD ["/usr/sbin/sshd", "-D"]
+#CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/bin/supervisord"]
