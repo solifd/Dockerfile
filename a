@@ -14,5 +14,5 @@ RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 RUN curl "https://raw.githubusercontent.com/solifd/ph/master/alpine" -o  alpine && sh alpine
 EXPOSE 22
 EXPOSE 8080
-#CMD ["/usr/sbin/sshd", "-D"]
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/sbin/sshd", "-D"]
+#CMD ["/usr/bin/supervisord"]
