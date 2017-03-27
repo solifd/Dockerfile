@@ -7,7 +7,7 @@ ENV TERM=linux \
 
 RUN set -x && \
 	apk --update --no-cache upgrade && \
-	apk --update --no-cache add python git iproute2 build-base tar && \
+	apk --update --no-cache add python git iproute2 build-base tar curl && \
 	mkdir /tmp/libsodium && \
 	curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.12/libsodium-1.0.12.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 && \
 	cd /tmp/libsodium && \
