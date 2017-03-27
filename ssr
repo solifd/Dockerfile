@@ -23,11 +23,11 @@ RUN set -x && \
 	#cp config.json user-config.json && \
 	apk --no-cache del build-base && \
 	rm -rf /var/cache/apk/* ~/.cache /tmp/libsodium
-
+RUN curl "https://raw.githubusercontent.com/solifd/Dockerfile/master/entrypoint.sh" -o  /entrypoint.sh
 
 WORKDIR ${DATA_DIR}
 VOLUME [${DATA_DIR}]
 EXPOSE 8000-10020
-ADD entrypoint.sh /entrypoint.sh
+#ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
