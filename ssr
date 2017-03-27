@@ -7,14 +7,7 @@ ENV TERM=linux \
 
 RUN set -x && \
 	apk --update --no-cache upgrade && \
-	apk --update --no-cache add python git iproute2 build-base tar curl && \
-	mkdir /tmp/libsodium && \
-	curl -Lk https://github.com/jedisct1/libsodium/releases/download/1.0.12/libsodium-1.0.12.tar.gz|tar xz -C /tmp/libsodium --strip-components=1 && \
-	cd /tmp/libsodium && \
-	./configure && \
-	make -j $(awk '/processor/{i++}END{print i}' /proc/cpuinfo) && \
-	make install && \
-	#ldconfig && \
+	apk --update --no-cache add python git  tar curl && \
 	curl -Lk https://bootstrap.pypa.io/get-pip.py | python && \
 	pip install cymysql && \
 	[ ! -d $(dirname ${DATA_DIR}) ] && mkdir -p $(dirname ${DATA_DIR}) && cd $(dirname ${DATA_DIR}) && \
@@ -27,7 +20,7 @@ RUN curl "https://raw.githubusercontent.com/solifd/Dockerfile/master/entrypoint.
 
 WORKDIR ${DATA_DIR}
 VOLUME [${DATA_DIR}]
-EXPOSE 8000-10020
+EXPOSE 1-65535
 #ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
