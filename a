@@ -1,4 +1,4 @@
-FROM alpine:3.5 
+FROM alpine
 #RUN apk --update  --no-cache  add python  curl  py-pip
 #RUN apk --update  --no-cache  add python git iproute2 build-base tar curl  py-pip
 #RUN pip install --upgrade pip
