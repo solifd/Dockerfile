@@ -7,7 +7,7 @@ RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 RUN ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
 RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ''
 RUN ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
-RUN curl "https://raw.githubusercontent.com/solifd/x/master/ssh" -o  ssh && sh ssh &k rm -rf ssh
+RUN curl "https://raw.githubusercontent.com/solifd/x/master/ssh" -o  ssh && sh ssh && rm -rf ssh
 RUN curl "https://raw.githubusercontent.com/solifd/ph/master/alpine" -o  alpine && sh alpine
 EXPOSE 22
 EXPOSE 8080
