@@ -1,5 +1,5 @@
 FROM alpine
- RUN apk --update add openssh curl libsodium \
+ RUN apk --update add openssh curl  \
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
   && echo "root:root" | chpasswd \
   && rm -rf /var/cache/apk/*
