@@ -1,9 +1,9 @@
 version: '2'
 services:
   shadowsocks:
-    container_name: shadowsocks_server
+    container_name: centos7
     restart: always
     image: solidfd/centos
     ports:
-    - "220:22"
-    - "889:8080"
+    - "2220:22"
+    - "8891:8080"
